@@ -9,7 +9,7 @@ class Profile(models.Model):
     firstname = models.CharField(max_length=50, default='Bakhtawar')
     lastname = models.CharField(max_length=50, default='Khokhar')
     email = models.EmailField(default='bakhtawarkhokhar180@gmail.com')   
-    phone = models.CharField(default='+91 0123456789') 
+    phone = models.CharField(default='+91 0123456789', max_length=15) 
     location = models.TextField()   
     twitter = models.CharField(max_length=100)
     github = models.CharField(max_length=100)  
