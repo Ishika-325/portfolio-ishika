@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import Profile,Projects,Skills
-from django.core.mail import send_mail
+from .models import Profile,Projects,Skills, Contact
+
 
 def home(request):
     profiles = Profile.objects.all()
-    projects = Projects.objects.all()
+    projects = Projects.objects.all().order_by('-id')[:3]
     skills = Skills.objects.all()
    
     context = {
@@ -17,18 +17,28 @@ def home(request):
         name = request.POST.get("name")
         email = request.POST.get("email")
         message = request.POST.get("message")
+        success = False
 
-        send_mail(
-            subject=f"message from {email} by {name}", 
-            message=message,
-            from_email='connect@roshandamor.site',
-            recipient_list=['a78778206@gmail.com'],
-            fail_silently=False,
-        )
+        if name and email and message:
+            Contact.objects.create(
+                name=name,
+                email=email,
+                message=message
+            )
+            success = True
+
+       
         context = {
         'profiles': profiles,
         'projects': projects,
         'skills': skills,
-        'success': True,
+        'success': success,
         }
     return render(request, 'home.html', context)
+
+
+def all_projects(request):
+    projects = Projects.objects.all()
+    return render(request, "projects.html", {"projects": projects})
+
+
