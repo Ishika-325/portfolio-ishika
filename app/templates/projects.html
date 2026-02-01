@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Projects - Ishika Gupta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'navy': '#1a1f3a',
+                        'navy-light': '#2a2f4a',
+                        'cyan': '#22d3ee',
+                        'gradient-blue-start': '#4f46e5',
+                        'gradient-blue-end': '#06b6d4'
+                    },
+                    backgroundImage: {
+                        'gradient-blue': 'linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%)'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+    </style>
+</head>
+<body class="bg-navy text-white font-sans">
+
+<!-- Navbar -->
+<nav class="fixed top-0 w-full bg-navy/95 backdrop-blur-sm z-50 px-4 sm:px-6 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="text-cyan text-2xl font-bold">
+            Portfolio
+        </div>
+        <div class="hidden lg:flex items-center space-x-8">
+            <a href="/" class="bg-gradient-blue px-6 py-2 rounded-lg text-white font-medium hover:opacity-90 transition-opacity">Home</a>
+        </div>
+        <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+    </div>
+    <div id="mobile-menu" class="lg:hidden hidden bg-navy-light mt-4 rounded-2xl p-6">
+        <div class="flex flex-col space-y-4">
+            <a href="/" class="bg-gradient-blue px-6 py-2 rounded-lg text-white font-medium hover:opacity-90 transition-opacity">Home</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Heading -->
+<section class="pt-32 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+        <h1 class="text-5xl font-bold mb-4">All Projects</h1>
+        <p class="text-gray-400 max-w-2xl mx-auto">A complete showcase of my work demonstrating my skills and growth.</p>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="pb-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for project in projects %}
+            <div class="group bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-cyan/50 hover:shadow-lg transition-all duration-300">
+                
+                <!-- Image -->
+                <div class="overflow-hidden">
+                    <img src="{{ project.img.url }}" alt="{{ project.title }}" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                
+                <!-- Content -->
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold mb-2 line-clamp-1">{{ project.title }}</h3>
+                    <p class="text-gray-400 text-sm mb-4 line-clamp-3">{{ project.description }}</p>
+                    <a href="{{ project.link }}" target="_blank" class="inline-flex items-center text-cyan font-medium hover:text-white transition">
+                        View Project <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-gray-400 col-span-full text-center">No projects available yet.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Optional: Back to home or other CTA -->
+        <div class="mt-12 text-center">
+            <a href="/" class="inline-block px-6 py-3 bg-gradient-blue text-white font-medium rounded-lg hover:opacity-90 transition-opacity">
+                Back to Home
+            </a>
+        </div>
+    </div>
+</section>
+
+<script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+</script>
+
+</body>
+</html>
